@@ -1,8 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generateBtn');
     const lottoNumbersDiv = document.getElementById('lottoNumbers');
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const body = document.body;
 
     generateBtn.addEventListener('click', generateLottoNumbers);
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Theme initialization
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️'; // Sun icon for light mode
+        } else {
+            body.classList.remove('dark-mode');
+            themeToggleBtn.textContent = '🌙'; // Moon icon for dark mode
+        }
+    }
+
+    function toggleTheme() {
+        if (body.classList.contains('dark-mode')) {
+            applyTheme('light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            applyTheme('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    // Load saved theme or detect system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+    } else {
+        applyTheme('light'); // Default to light if no preference
+    }
 
     function generateLottoNumbers() {
         const numbers = new Set();

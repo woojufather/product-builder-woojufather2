@@ -1,3 +1,25 @@
+:root {
+    --background-color: #f4f4f4;
+    --text-color: #333;
+    --container-bg: #fff;
+    --heading-color: #4CAF50;
+    --number-bg: #4CAF50;
+    --number-border: #388E3C;
+    --button-bg: #007bff;
+    --button-hover-bg: #0056b3;
+}
+
+body.dark-mode {
+    --background-color: #2c2c2c;
+    --text-color: #e0e0e0;
+    --container-bg: #3c3c3c;
+    --heading-color: #81C784;
+    --number-bg: #66BB6A;
+    --number-border: #43A047;
+    --button-bg: #5c6bc0;
+    --button-hover-bg: #3f51b5;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     display: flex;
@@ -5,23 +27,49 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
-    background-color: #fff;
+    background-color: var(--container-bg);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 90%;
     max-width: 500px;
+    position: relative; /* For positioning the toggle button */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.theme-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+
 h1 {
-    color: #4CAF50;
+    color: var(--heading-color);
     margin-bottom: 20px;
+    transition: color 0.3s ease;
 }
 
 .lotto-numbers {
@@ -39,15 +87,16 @@ h1 {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #4CAF50;
+    background-color: var(--number-bg);
     color: white;
     font-size: 1.8em;
     font-weight: bold;
-    border: 2px solid #388E3C;
+    border: 2px solid var(--number-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 button {
-    background-color: #007bff;
+    background-color: var(--button-bg);
     color: white;
     border: none;
     padding: 12px 25px;
@@ -58,7 +107,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--button-hover-bg);
 }
 
 @media (max-width: 600px) {
