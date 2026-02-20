@@ -1,20 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const generateBtn = document.getElementById('generateBtn');
-    const lottoNumbersDiv = document.getElementById('lottoNumbers');
     const themeToggleBtn = document.getElementById('themeToggle');
     const body = document.body;
-
-    generateBtn.addEventListener('click', generateLottoNumbers);
-    themeToggleBtn.addEventListener('click', toggleTheme);
 
     // Theme initialization
     function applyTheme(theme) {
         if (theme === 'dark') {
             body.classList.add('dark-mode');
-            themeToggleBtn.textContent = '☀️'; // Sun icon for light mode
+            themeToggleBtn.textContent = '☀️';
         } else {
             body.classList.remove('dark-mode');
-            themeToggleBtn.textContent = '🌙'; // Moon icon for dark mode
+            themeToggleBtn.textContent = '🌙';
         }
     }
 
@@ -28,33 +23,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Load saved theme or detect system preference
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Load saved theme
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         applyTheme(savedTheme);
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         applyTheme('dark');
-    } else {
-        applyTheme('light'); // Default to light if no preference
     }
 
-    function generateLottoNumbers() {
-        const numbers = new Set();
-        while (numbers.size < 6) {
-            numbers.add(Math.floor(Math.random() * 45) + 1);
-        }
-        
-        const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
-        
-        lottoNumbersDiv.innerHTML = ''; // Clear previous numbers
-        sortedNumbers.forEach(num => {
-            const span = document.createElement('span');
-            span.classList.add('number');
-            span.textContent = num.toString().padStart(2, '0'); // Format to 2 digits
-            lottoNumbersDiv.appendChild(span);
+    // Smooth scroll for CTA button
+    document.querySelector('.cta-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        document.querySelector(targetId).scrollIntoView({
+            behavior: 'smooth'
         });
-    }
+    });
 
-    // Generate numbers on initial load
-    generateLottoNumbers();
+    // simple scroll animation observer
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.card, .patent-content').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'all 0.6s ease-out';
+        observer.observe(el);
+    });
 });
