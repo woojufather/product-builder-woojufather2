@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeGuard - 옵션 선택 및 구매</title>
+    <title>SafeGuard - 수량 선택 및 구매</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         .options-container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 50px auto;
             padding: 30px;
             background: var(--card-bg);
@@ -35,11 +35,22 @@
             background-color: var(--bg-color);
             color: var(--text-color);
         }
+        .price-info {
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
         .total-price {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             text-align: right;
-            margin-top: 30px;
+            margin-top: 10px;
             color: var(--accent-color);
         }
         .final-buy-button {
@@ -53,49 +64,48 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+        .final-buy-button:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">SafeGuard</div>
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">SafeGuard</a></div>
         </nav>
     </header>
 
     <main>
         <div class="options-container">
-            <h1>상품 옵션 선택</h1>
-            <p style="margin-bottom: 30px; opacity: 0.7;">주문하실 상품의 옵션을 선택해 주세요.</p>
-
-            <div class="option-group">
-                <label for="color">색상 선택</label>
-                <select id="color">
-                    <option value="silver">실버 (기본)</option>
-                    <option value="white">화이트</option>
-                    <option value="black">매트 블랙 (+2,000원)</option>
-                </select>
-            </div>
+            <h1>주문 수량 선택</h1>
+            <p style="margin-bottom: 30px; opacity: 0.7;">SafeGuard 도어 잠김 해제장치</p>
 
             <div class="option-group">
                 <label for="quantity">수량</label>
                 <select id="quantity">
                     <option value="1">1개</option>
-                    <option value="2">2개 (5% 할인)</option>
-                    <option value="3">3개 (10% 할인)</option>
+                    <option value="2">2개</option>
+                    <option value="3">3개</option>
+                    <option value="4">4개</option>
+                    <option value="5">5개</option>
                 </select>
             </div>
 
-            <div class="option-group">
-                <label for="install">설치 서비스</label>
-                <select id="install">
-                    <option value="self">자가 설치 (무료)</option>
-                    <option value="pro">방문 설치 (+15,000원)</option>
-                </select>
-            </div>
-
-            <div class="total-price">
-                총 합계: 39,000원
+            <div class="price-info">
+                <div class="price-row">
+                    <span>상품 금액</span>
+                    <span id="product-price">10,000원</span>
+                </div>
+                <div class="price-row">
+                    <span>배송비</span>
+                    <span>3,000원</span>
+                </div>
+                <div class="total-price" id="total-display">
+                    총 합계: 13,000원
+                </div>
             </div>
 
             <button class="final-buy-button">결제하기</button>
@@ -105,5 +115,23 @@
     <footer>
         <p>&copy; 2026 SafeGuard Patent Solution. All rights reserved.</p>
     </footer>
+
+    <script>
+        const quantitySelect = document.getElementById('quantity');
+        const productPriceText = document.getElementById('product-price');
+        const totalDisplayText = document.getElementById('total-display');
+        
+        const UNIT_PRICE = 10000;
+        const SHIPPING_FEE = 3000;
+
+        quantitySelect.addEventListener('change', () => {
+            const quantity = parseInt(quantitySelect.value);
+            const productTotal = UNIT_PRICE * quantity;
+            const finalTotal = productTotal + SHIPPING_FEE;
+            
+            productPriceText.textContent = productTotal.toLocaleString() + '원';
+            totalDisplayText.textContent = '총 합계: ' + finalTotal.toLocaleString() + '원';
+        });
+    </script>
 </body>
 </html>
