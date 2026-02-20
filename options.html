@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeGuard - 옵션 선택 및 구매</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .options-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .option-group {
+            margin-bottom: 25px;
+        }
+        .option-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 30px;
+            color: var(--accent-color);
+        }
+        .final-buy-button {
+            width: 100%;
+            padding: 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SafeGuard</div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="options-container">
+            <h1>상품 옵션 선택</h1>
+            <p style="margin-bottom: 30px; opacity: 0.7;">주문하실 상품의 옵션을 선택해 주세요.</p>
+
+            <div class="option-group">
+                <label for="color">색상 선택</label>
+                <select id="color">
+                    <option value="silver">실버 (기본)</option>
+                    <option value="white">화이트</option>
+                    <option value="black">매트 블랙 (+2,000원)</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="quantity">수량</label>
+                <select id="quantity">
+                    <option value="1">1개</option>
+                    <option value="2">2개 (5% 할인)</option>
+                    <option value="3">3개 (10% 할인)</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="install">설치 서비스</label>
+                <select id="install">
+                    <option value="self">자가 설치 (무료)</option>
+                    <option value="pro">방문 설치 (+15,000원)</option>
+                </select>
+            </div>
+
+            <div class="total-price">
+                총 합계: 39,000원
+            </div>
+
+            <button class="final-buy-button">결제하기</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SafeGuard Patent Solution. All rights reserved.</p>
+    </footer>
+</body>
+</html>
