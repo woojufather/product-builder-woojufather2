@@ -85,7 +85,7 @@
             <h1 style="text-align: center; margin-bottom: 10px;">견적 문의</h1>
             <p style="text-align: center; margin-bottom: 30px; opacity: 0.7;">대량 구매, 설치 상담 및 기타 문의사항을 남겨주시면<br>빠른 시일 내에 답변 드리겠습니다.</p>
 
-            <form id="contactForm">
+            <form id="contactForm" action="https://formspree.io/f/xlgwljaj" method="POST">
                 <div class="form-group">
                     <label for="name">성함 / 업체명</label>
                     <input type="text" id="name" name="name" required placeholder="예: 홍길동 / (주)헬프오픈">
@@ -106,7 +106,7 @@
                     <label for="message">문의 내용</label>
                     <textarea id="message" name="message" required placeholder="문의하실 내용을 상세히 적어주세요."></textarea>
                 </div>
-                <button type="submit" class="submit-button">문의하기 (메일 발송)</button>
+                <button type="submit" class="submit-button">문의하기</button>
             </form>
 
             <div class="contact-info">
@@ -120,30 +120,5 @@
         <p>&copy; 2026 HelpOpen Patent Solution. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            const mailtoLink = `mailto:wooju200903@gmail.com?subject=${encodeURIComponent('[견적 문의] ' + subject)}&body=${encodeURIComponent(
-                '성함/업체명: ' + name + '
-' +
-                '이메일: ' + email + '
-' +
-                '연락처: ' + phone + '
-
-' +
-                '문의 내용:
-' + message
-            )}`;
-            
-            window.location.href = mailtoLink;
-        });
-    </script>
 </body>
 </html>
