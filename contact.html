@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ES9BFXNYPM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ES9BFXNYPM');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HelpOpen 견적 문의 | 안전을 위한 첫 걸음</title>
@@ -102,7 +110,7 @@
             </form>
 
             <div class="contact-info">
-                <p>이메일: contact@helpopen.store</p>
+                <p>이메일: wooju200903@gmail.com</p>
                 <p>고객센터: 02-123-4567</p>
             </div>
         </div>
@@ -122,7 +130,7 @@
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
-            const mailtoLink = `mailto:contact@helpopen.store?subject=${encodeURIComponent('[견적 문의] ' + subject)}&body=${encodeURIComponent(
+            const mailtoLink = `mailto:wooju200903@gmail.com?subject=${encodeURIComponent('[견적 문의] ' + subject)}&body=${encodeURIComponent(
                 '성함/업체명: ' + name + '
 ' +
                 '이메일: ' + email + '
