@@ -187,6 +187,32 @@ main {
     flex: 1;
 }
 
+.patent-gallery {
+    flex: 1;
+    display: flex;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.patent-image {
+    flex: 1;
+    background-color: white;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.patent-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
 .image-box {
     width: 100%;
     height: 300px;
