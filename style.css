@@ -159,7 +159,7 @@ main {
 }
 
 .card.bg-image-card {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('img2.png');
+    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('img2.png');
     background-size: cover;
     background-position: center 30%; /* 상단은 약간 컷하고 중간 부분 위주로 노출 */
     background-repeat: no-repeat;
@@ -168,7 +168,7 @@ main {
 
 /* 다크 모드일 때의 배경 처리 */
 body.dark-mode .card.bg-image-card {
-    background-image: linear-gradient(rgba(31, 41, 55, 0.9), rgba(31, 41, 55, 0.9)), url('img2.png');
+    background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img2.png');
 }
 
 .highlight-section {
