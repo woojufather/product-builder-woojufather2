@@ -168,7 +168,7 @@ main {
 
 .card {
     background-color: var(--card-bg);
-    padding: 40px;
+    padding: 30px; /* 기존 40px에서 30px로 줄여 가로 공간 확보 */
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     border-top: 5px solid var(--primary-color);
@@ -309,3 +309,4 @@ footer {
     .hero-content h1 { font-size: 2rem; }
     .patent-content { flex-direction: column; }
 }
+
