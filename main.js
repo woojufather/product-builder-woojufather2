@@ -33,39 +33,43 @@ document.addEventListener('DOMContentLoaded', () => {
         applyTheme('dark');
     }
 
-    // Custom Luxurious Smooth Scroll
-    function luxuriousScroll(targetId) {
+    // Custom Constant Speed Smooth Scroll
+    function constantScroll(targetId) {
         const targetElement = document.querySelector(targetId);
         if (!targetElement) return;
 
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 70; // 70 is header height
-        const startPosition = window.pageYOffset;
+        const headerHeight = 70;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+        const startPosition = window.scrollY;
         const distance = targetPosition - startPosition;
-        const duration = 1500; // 1.5 seconds for a luxurious feel
-        let start = null;
+        const duration = 1500; // 1.5 seconds
+        let startTime = null;
 
-        function step(timestamp) {
-            if (!start) start = timestamp;
-            const progress = timestamp - start;
-            const run = ease(progress, startPosition, distance, duration);
+        function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            
+            // Strictly Linear: distance * (current_time / total_duration) + start_position
+            const run = (distance * (timeElapsed / duration)) + startPosition;
+            
             window.scrollTo(0, run);
-            if (progress < duration) window.requestAnimationFrame(step);
+
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            } else {
+                window.scrollTo(0, targetPosition); // Ensure precision at the end
+            }
         }
 
-        // Linear Easing Function (Constant Speed)
-        function ease(t, b, c, d) {
-            return c * t / d + b;
-        }
-
-        window.requestAnimationFrame(step);
+        requestAnimationFrame(animation);
     }
 
-    // Apply luxurious scroll to all anchor links
+    // Apply scroll to all anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
-            luxuriousScroll(targetId);
+            constantScroll(targetId);
         });
     });
 
