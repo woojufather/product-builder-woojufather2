@@ -161,7 +161,7 @@ main {
 .card.bg-image-card {
     background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('img2.png');
     background-size: cover;
-    background-position: center 15%; /* 이미지 위쪽을 더 보여주어 손잡이가 글자 아래로 내려가도록 조정 */
+    background-position: center 25%; /* 손잡이가 글자 아래 적절히 보이도록 위치 미세 조정 */
     background-repeat: no-repeat;
     border-top: 5px solid var(--primary-color); /* 원래의 파란색 포인트 컬러로 복구 */
 }
