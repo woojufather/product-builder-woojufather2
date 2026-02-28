@@ -143,13 +143,11 @@ main {
 }
 
 .section {
-    padding: 100px 20px;
-    min-height: 85vh;
+    padding: 120px 20px; /* 상하 여백을 늘려 페이지 분리감 확보 */
+    min-height: 80vh; /* 2페이지에서 3페이지가 보이는 현상 방지 */
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    position: relative;
 }
 
 .section h2 {
@@ -241,7 +239,7 @@ body.dark-mode .card.bg-image-card-2 {
 
 .patent-content {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* 중앙 정렬 대신 위쪽 정렬로 변경하여 잘림 방지 */
     gap: 50px;
     max-width: 1200px;
     margin: 0 auto;
@@ -261,15 +259,11 @@ body.dark-mode .card.bg-image-card-2 {
     font-weight: bold;
 }
 
-.patent-placeholder {
-    flex: 1;
-}
-
 .patent-gallery {
     flex: 1;
     display: flex;
     gap: 10px;
-    height: 300px; /* 기존 image-box와 동일한 높이 고정 */
+    height: 300px;
 }
 
 .patent-image {
@@ -287,7 +281,7 @@ body.dark-mode .card.bg-image-card-2 {
 .patent-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 이미지가 잘리지 않고 박스 안에 쏙 들어가도록 설정 */
+    object-fit: contain;
     padding: 5px;
 }
 
@@ -312,4 +306,5 @@ footer {
 @media (max-width: 768px) {
     .hero-content h1 { font-size: 2rem; }
     .patent-content { flex-direction: column; }
+    .section { padding: 80px 20px; }
 }
