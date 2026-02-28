@@ -148,6 +148,12 @@ main {
     gap: 30px;
 }
 
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .card {
     background-color: var(--card-bg);
     padding: 40px;
@@ -156,6 +162,22 @@ main {
     border-top: 5px solid var(--primary-color);
     position: relative;
     overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.clickable-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+.view-more {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 .card.bg-image-card-1 {
