@@ -17,10 +17,6 @@ body.dark-mode {
     --primary-color: #60a5fa;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -189,12 +185,12 @@ main {
 }
 
 .card p {
-    margin-bottom: 10px; /* 기존보다 간격을 줄임 */
+    margin-bottom: 10px;
 }
 
 .view-more {
     display: inline-block;
-    margin-top: 5px; /* 본문과의 간격을 더 줄임 */
+    margin-top: 5px;
     font-size: 0.9rem;
     color: var(--primary-color);
     font-weight: bold;
@@ -222,13 +218,12 @@ main {
 }
 
 /* 다크 모드일 때의 배경 처리 */
-body.dark-mode .card.bg-image-card-stats,
-body.dark-mode .card.bg-image-card-1 {
-    background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img2.png');
-}
-
 body.dark-mode .card.bg-image-card-stats {
     background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img4.png');
+}
+
+body.dark-mode .card.bg-image-card-1 {
+    background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img2.png');
 }
 
 body.dark-mode .card.bg-image-card-2 {
