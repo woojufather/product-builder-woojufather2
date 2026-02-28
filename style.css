@@ -143,9 +143,13 @@ main {
 }
 
 .section {
-    padding: 50px 20px; /* 기존 80px에서 50px로 줄여 콘텐츠가 더 위에서 시작하게 함 */
+    padding: 100px 20px;
+    min-height: 85vh;
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .section h2 {
@@ -309,4 +313,3 @@ footer {
     .hero-content h1 { font-size: 2rem; }
     .patent-content { flex-direction: column; }
 }
-
