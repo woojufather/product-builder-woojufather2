@@ -158,17 +158,28 @@ main {
     overflow: hidden;
 }
 
-.card.bg-image-card {
+.card.bg-image-card-1 {
     background-image: linear-gradient(rgba(255, 255, 255, 0.77), rgba(255, 255, 255, 0.77)), url('img2.png');
     background-size: cover;
-    background-position: center 47%; /* 요청하신 대로 47%로 조정 */
+    background-position: center 47%;
     background-repeat: no-repeat;
-    border-top: 5px solid var(--primary-color); /* 원래의 파란색 포인트 컬러로 복구 */
+}
+
+.card.bg-image-card-2 {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.77), rgba(255, 255, 255, 0.77)), url('img1.png');
+    background-size: cover;
+    background-position: center 47%;
+    background-repeat: no-repeat;
 }
 
 /* 다크 모드일 때의 배경 처리 */
-body.dark-mode .card.bg-image-card {
+body.dark-mode .card.bg-image-card-1,
+body.dark-mode .card.bg-image-card-2 {
     background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img2.png');
+}
+
+body.dark-mode .card.bg-image-card-2 {
+    background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img1.png');
 }
 
 .highlight-section {
