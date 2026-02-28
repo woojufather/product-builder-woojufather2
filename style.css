@@ -159,7 +159,7 @@ main {
 }
 
 .card.bg-image-card {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url('img2.png');
+    background-image: linear-gradient(rgba(255, 255, 255, 0.77), rgba(255, 255, 255, 0.77)), url('img2.png');
     background-size: cover;
     background-position: center 47%; /* 요청하신 대로 47%로 조정 */
     background-repeat: no-repeat;
