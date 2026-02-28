@@ -166,7 +166,7 @@ main {
 }
 
 .card.bg-image-card-2 {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.77), rgba(255, 255, 255, 0.77)), url('img1.png');
+    background-image: linear-gradient(rgba(255, 255, 255, 0.77), rgba(255, 255, 255, 0.77)), url('img3.jpg');
     background-size: cover;
     background-position: center 47%;
     background-repeat: no-repeat;
@@ -179,7 +179,7 @@ body.dark-mode .card.bg-image-card-2 {
 }
 
 body.dark-mode .card.bg-image-card-2 {
-    background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img1.png');
+    background-image: linear-gradient(rgba(31, 41, 55, 0.8), rgba(31, 41, 55, 0.8)), url('img3.jpg');
 }
 
 .highlight-section {
