@@ -150,9 +150,9 @@ main {
     position: relative;
 }
 
-/* 2페이지 (#problem): img6 스타일 - 헤더 아래 딱 25px 여유 공간 확보 */
+/* 2페이지 (#problem): img6 스타일 - 헤더 아래 딱 35px 여유 공간 확보 */
 #problem {
-    padding-top: 25px; 
+    padding-top: 35px; 
 }
 
 /* 3페이지 (#patent): img7 스타일 - 헤더 바로 아래 제목 배치 */
