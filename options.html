@@ -137,7 +137,7 @@
                 <label for="quantity">수량 (최대 100개)</label>
                 <div class="quantity-selector">
                     <button type="button" class="qty-btn" id="minus-btn" aria-label="수량 감소">-</button>
-                    <input type="text" id="quantity-display" value="1" readonly>
+                    <input type="number" id="quantity-display" value="1" min="1" max="100">
                     <button type="button" class="qty-btn" id="plus-btn" aria-label="수량 증가">+</button>
                 </div>
             </div>
@@ -183,9 +183,11 @@
 
         let currentQuantity = 1;
 
-        function updateDisplay() {
-            // Update quantity text
-            quantityDisplay.value = currentQuantity;
+        function updateDisplay(updateInput = true) {
+            // Update quantity text only if requested (to avoid cursor jumping while typing)
+            if (updateInput) {
+                quantityDisplay.value = currentQuantity;
+            }
 
             // Calculate prices
             const productTotal = UNIT_PRICE * currentQuantity;
@@ -213,17 +215,45 @@
             plusBtn.disabled = currentQuantity >= MAX_QUANTITY;
         }
 
+        // Handle manual input
+        quantityDisplay.addEventListener('input', (e) => {
+            let value = parseInt(e.target.value);
+            
+            if (isNaN(value)) {
+                currentQuantity = 1;
+            } else if (value > MAX_QUANTITY) {
+                currentQuantity = MAX_QUANTITY;
+                e.target.value = MAX_QUANTITY;
+            } else if (value < 1) {
+                currentQuantity = 1;
+                // Don't force reset value to 1 immediately to allow typing (e.g. clearing the field)
+            } else {
+                currentQuantity = value;
+            }
+            
+            updateDisplay(false); // Don't reset input value while typing
+        });
+
+        // Ensure valid value on blur
+        quantityDisplay.addEventListener('blur', (e) => {
+            let value = parseInt(e.target.value);
+            if (isNaN(value) || value < 1) {
+                currentQuantity = 1;
+            }
+            updateDisplay(true); // Force reset to valid value
+        });
+
         minusBtn.addEventListener('click', () => {
             if (currentQuantity > 1) {
                 currentQuantity--;
-                updateDisplay();
+                updateDisplay(true);
             }
         });
 
         plusBtn.addEventListener('click', () => {
             if (currentQuantity < MAX_QUANTITY) {
                 currentQuantity++;
-                updateDisplay();
+                updateDisplay(true);
             }
         });
 
