@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
         const startPosition = window.scrollY;
         const distance = targetPosition - startPosition;
-        const duration = 700; // 0.7 seconds
+        const duration = 500; // 0.5 seconds
         let startTime = null;
 
 
