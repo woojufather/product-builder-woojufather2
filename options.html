@@ -35,15 +35,49 @@
             margin-bottom: 10px;
             font-weight: bold;
         }
-        select {
-            width: 100%;
-            padding: 12px;
+        
+        /* Quantity Selector Styles */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--light-bg);
+            padding: 5px;
             border-radius: 8px;
+            width: fit-content;
+        }
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
             border: 1px solid #ddd;
-            font-size: 1rem;
-            background-color: var(--bg-color);
+            background: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
             color: var(--text-color);
         }
+        .qty-btn:hover {
+            background: #f0f0f0;
+        }
+        .qty-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        #quantity-display {
+            width: 60px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            background: transparent;
+            color: var(--text-color);
+        }
+
         .price-info {
             border-top: 1px solid #eee;
             margin-top: 30px;
@@ -54,6 +88,13 @@
             justify-content: space-between;
             margin-bottom: 10px;
             font-size: 1.1rem;
+        }
+        .shipping-notice {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-top: -5px;
+            margin-bottom: 10px;
+            text-align: right;
         }
         .total-price {
             font-size: 1.8rem;
@@ -93,14 +134,12 @@
             <p style="margin-bottom: 30px; opacity: 0.7;">HelpOpen 도어 잠김 해제장치</p>
 
             <div class="option-group">
-                <label for="quantity">수량</label>
-                <select id="quantity">
-                    <option value="1">1개</option>
-                    <option value="2">2개</option>
-                    <option value="3">3개</option>
-                    <option value="4">4개</option>
-                    <option value="5">5개</option>
-                </select>
+                <label for="quantity">수량 (최대 100개)</label>
+                <div class="quantity-selector">
+                    <button type="button" class="qty-btn" id="minus-btn" aria-label="수량 감소">-</button>
+                    <input type="text" id="quantity-display" value="1" readonly>
+                    <button type="button" class="qty-btn" id="plus-btn" aria-label="수량 증가">+</button>
+                </div>
             </div>
 
             <div class="price-info">
@@ -110,7 +149,10 @@
                 </div>
                 <div class="price-row">
                     <span>배송비</span>
-                    <span>3,000원</span>
+                    <span id="shipping-fee">3,000원</span>
+                </div>
+                <div class="shipping-notice" id="shipping-notice">
+                    * 5개 이상 구매 시 배송비 무료
                 </div>
                 <div class="total-price" id="total-display">
                     총 합계: 13,000원
@@ -126,21 +168,67 @@
     </footer>
 
     <script>
-        const quantitySelect = document.getElementById('quantity');
+        const minusBtn = document.getElementById('minus-btn');
+        const plusBtn = document.getElementById('plus-btn');
+        const quantityDisplay = document.getElementById('quantity-display');
         const productPriceText = document.getElementById('product-price');
+        const shippingFeeText = document.getElementById('shipping-fee');
         const totalDisplayText = document.getElementById('total-display');
+        const shippingNotice = document.getElementById('shipping-notice');
         
         const UNIT_PRICE = 10000;
-        const SHIPPING_FEE = 3000;
+        const DEFAULT_SHIPPING_FEE = 3000;
+        const FREE_SHIPPING_THRESHOLD = 5;
+        const MAX_QUANTITY = 100;
 
-        quantitySelect.addEventListener('change', () => {
-            const quantity = parseInt(quantitySelect.value);
-            const productTotal = UNIT_PRICE * quantity;
-            const finalTotal = productTotal + SHIPPING_FEE;
-            
+        let currentQuantity = 1;
+
+        function updateDisplay() {
+            // Update quantity text
+            quantityDisplay.value = currentQuantity;
+
+            // Calculate prices
+            const productTotal = UNIT_PRICE * currentQuantity;
+            const isFreeShipping = currentQuantity >= FREE_SHIPPING_THRESHOLD;
+            const currentShippingFee = isFreeShipping ? 0 : DEFAULT_SHIPPING_FEE;
+            const finalTotal = productTotal + currentShippingFee;
+
+            // Update text elements
             productPriceText.textContent = productTotal.toLocaleString() + '원';
+            
+            if (isFreeShipping) {
+                shippingFeeText.textContent = '무료';
+                shippingFeeText.style.color = 'var(--primary-color)';
+                shippingNotice.textContent = '✓ 5개 이상 구매로 배송비가 면제되었습니다.';
+            } else {
+                shippingFeeText.textContent = DEFAULT_SHIPPING_FEE.toLocaleString() + '원';
+                shippingFeeText.style.color = 'inherit';
+                shippingNotice.textContent = '* 5개 이상 구매 시 배송비 무료';
+            }
+
             totalDisplayText.textContent = '총 합계: ' + finalTotal.toLocaleString() + '원';
+
+            // Button states
+            minusBtn.disabled = currentQuantity <= 1;
+            plusBtn.disabled = currentQuantity >= MAX_QUANTITY;
+        }
+
+        minusBtn.addEventListener('click', () => {
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                updateDisplay();
+            }
         });
+
+        plusBtn.addEventListener('click', () => {
+            if (currentQuantity < MAX_QUANTITY) {
+                currentQuantity++;
+                updateDisplay();
+            }
+        });
+
+        // Initialize
+        updateDisplay();
     </script>
 </body>
 </html>
