@@ -33,12 +33,42 @@ document.addEventListener('DOMContentLoaded', () => {
         applyTheme('dark');
     }
 
-    // Smooth scroll for CTA button
-    document.querySelector('.cta-button').addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        document.querySelector(targetId).scrollIntoView({
-            behavior: 'smooth'
+    // Custom Luxurious Smooth Scroll
+    function luxuriousScroll(targetId) {
+        const targetElement = document.querySelector(targetId);
+        if (!targetElement) return;
+
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 70; // 70 is header height
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        const duration = 1500; // 1.5 seconds for a luxurious feel
+        let start = null;
+
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            const progress = timestamp - start;
+            const run = ease(progress, startPosition, distance, duration);
+            window.scrollTo(0, run);
+            if (progress < duration) window.requestAnimationFrame(step);
+        }
+
+        // Cubic Easing Function
+        function ease(t, b, c, d) {
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t * t + b;
+            t -= 2;
+            return c / 2 * (t * t * t + 2) + b;
+        }
+
+        window.requestAnimationFrame(step);
+    }
+
+    // Apply luxurious scroll to all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            luxuriousScroll(targetId);
         });
     });
 
