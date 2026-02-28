@@ -159,9 +159,9 @@ main {
 }
 
 .card.bg-image-card {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('img2.png');
+    background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url('img2.png');
     background-size: cover;
-    background-position: center 45%; /* 요청하신 대로 45%로 조정 */
+    background-position: center 47%; /* 요청하신 대로 47%로 조정 */
     background-repeat: no-repeat;
     border-top: 5px solid var(--primary-color); /* 원래의 파란색 포인트 컬러로 복구 */
 }
