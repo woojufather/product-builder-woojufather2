@@ -172,9 +172,13 @@ main {
     cursor: pointer;
 }
 
+.card p {
+    margin-bottom: 10px; /* 기존보다 간격을 줄임 */
+}
+
 .view-more {
     display: inline-block;
-    margin-top: 15px;
+    margin-top: 5px; /* 본문과의 간격을 더 줄임 */
     font-size: 0.9rem;
     color: var(--primary-color);
     font-weight: bold;
