@@ -52,12 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (progress < duration) window.requestAnimationFrame(step);
         }
 
-        // Cubic Easing Function
+        // Linear Easing Function (Constant Speed)
         function ease(t, b, c, d) {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t * t + b;
-            t -= 2;
-            return c / 2 * (t * t * t + 2) + b;
+            return c * t / d + b;
         }
 
         window.requestAnimationFrame(step);
