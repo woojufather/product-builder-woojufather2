@@ -247,6 +247,11 @@ body.dark-mode .card.bg-image-card-2 {
     max-width: 100%;
 }
 
+.closing-section {
+    min-height: auto; /* 최소 높이 해제 */
+    padding: 80px 20px; /* 적절한 여백 부여 */
+}
+
 .patent-content {
     display: flex;
     align-items: flex-start;
