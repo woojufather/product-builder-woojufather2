@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const duration = 1500; // 1.5 seconds
         let startTime = null;
 
+
         function animation(currentTime) {
             if (startTime === null) startTime = currentTime;
             const timeElapsed = currentTime - startTime;
