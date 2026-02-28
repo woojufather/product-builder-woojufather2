@@ -143,11 +143,21 @@ main {
 }
 
 .section {
-    padding: 120px 20px; /* 상하 여백을 늘려 페이지 분리감 확보 */
-    min-height: 80vh; /* 2페이지에서 3페이지가 보이는 현상 방지 */
+    padding: 80px 20px;
+    min-height: 80vh; 
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+}
+
+/* 2페이지 (#problem): img6 스타일 - 헤더 아래 여유 공간 확보 */
+#problem {
+    padding-top: 120px; 
+}
+
+/* 3페이지 (#patent): img7 스타일 - 헤더 바로 아래 제목 배치 */
+#patent {
+    padding-top: 70px;
 }
 
 .section h2 {
@@ -239,7 +249,7 @@ body.dark-mode .card.bg-image-card-2 {
 
 .patent-content {
     display: flex;
-    align-items: flex-start; /* 중앙 정렬 대신 위쪽 정렬로 변경하여 잘림 방지 */
+    align-items: flex-start;
     gap: 50px;
     max-width: 1200px;
     margin: 0 auto;
