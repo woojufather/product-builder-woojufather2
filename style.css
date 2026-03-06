@@ -84,7 +84,12 @@ main {
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 20px;
-    line-height: 1.4; /* 줄 간격을 확보하여 박스가 윗줄과 붙지 않게 조정 */
+    line-height: 1.2; /* 개별 라인 제어를 위해 기본 line-height는 줄임 */
+}
+
+.hero-title-line {
+    display: block; /* 한 줄씩 독립적으로 배치 */
+    margin-bottom: 10px; /* 줄 사이의 간격을 명확하게 부여 */
 }
 
 .hero-link {
@@ -102,10 +107,8 @@ main {
 .highlight {
     color: var(--primary-color);
     background-color: white;
-    padding: 4px 10px; /* 수직 패딩을 추가하여 박스 높이 밸런스 조정 */
+    padding: 2px 10px; /* 박스 내부 여백 최적화 */
     border-radius: 4px;
-    display: inline-block; /* 수직 여백이 정확히 적용되도록 설정 */
-    margin-top: 5px; /* 박스를 아래로 살짝 밀어줌 */
 }
 
 .cta-button {
