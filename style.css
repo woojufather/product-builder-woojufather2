@@ -84,15 +84,13 @@ main {
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 20px;
-    display: flex; /* Flexbox 적용 */
-    flex-direction: column; /* 세로 배치 */
-    align-items: center; /* 가로 중앙 정렬 */
-    gap: 15px; /* 데스크탑 줄 사이 간격 */
-    line-height: 1.1;
+    line-height: 1.5; /* 겹침 방지를 위한 충분한 줄 간격 */
+    word-break: keep-all; /* 단어 단위 줄바꿈으로 가독성 향상 */
 }
 
 .hero-title-line {
-    display: block;
+    display: block; /* 각 문장을 독립된 블록으로 설정 */
+    margin-bottom: 10px;
 }
 
 .hero-link {
@@ -112,6 +110,8 @@ main {
     background-color: white;
     padding: 2px 10px;
     border-radius: 4px;
+    display: inline-block; /* 배경색 박스가 텍스트 영역을 침범하지 않게 설정 */
+    line-height: 1.2; /* 박스 내부 텍스트 간격 조정 */
 }
 
 .cta-button {
@@ -387,18 +387,18 @@ footer {
     .hamburger.active span:nth-child(3) { transform: rotate(-45deg); }
 
     .hero-content h1 { 
-        font-size: 2.2rem; 
-        gap: 30px; /* 모바일에서 줄 사이 간격을 Flex Gap으로 30px 강제 부여 */
+        font-size: 1.8rem; /* 화면 너비에 맞춰 폰트 크기 하향 조정 */
+        line-height: 1.6; /* 줄 간격을 더 시원하게 확대 */
     }
 
     .hero-title-line {
-        margin-bottom: 0; /* Gap을 사용하므로 Margin은 초기화 */
+        margin-bottom: 15px; /* 줄 사이 간격 유지 */
     }
 
     .highlight {
-        padding: 4px 10px;
+        padding: 2px 8px;
     }
-    .section h2 { font-size: 1.8rem; }
+    .section h2 { font-size: 1.6rem; }
 
     .patent-content { flex-direction: column; }
     .patent-gallery { height: auto; flex-direction: column; }
@@ -406,4 +406,10 @@ footer {
 
     .cta-group { flex-direction: column; width: 100%; }
     .cta-button { width: 100%; text-align: center; }
+}
+
+@media (max-width: 380px) {
+    .hero-content h1 {
+        font-size: 1.5rem; /* 초소형 화면 대응 */
+    }
 }
