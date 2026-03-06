@@ -398,29 +398,33 @@ footer {
 
     /* 반응형 제목 설정 (clamp 사용) */
     .hero-content h1 { 
-        font-size: clamp(1.5rem, 8vw, 2.2rem); /* 화면 폭에 맞춰 자동 조절 */
-        line-height: 1.6;
-        text-align: center;
-        word-break: keep-all;
+        font-size: 1.8rem; /* 화면 너비에 맞춰 폰트 크기 하향 조정 */
+        line-height: 1.6; /* 줄 간격을 더 시원하게 확대 */
     }
 
     .hero-title-line {
-        margin-bottom: 20px; /* 줄 사이 간격 확보 */
-    }
-
-    .section h2 { 
-        font-size: clamp(1.3rem, 6vw, 1.8rem); /* 화면 폭에 맞춰 자동 조절 */
-        line-height: 1.5;
-        text-align: center;
-        word-break: keep-all;
+        margin-bottom: 15px; /* 줄 사이 간격 유지 */
     }
 
     .highlight {
         padding: 2px 8px;
-        display: inline-block; /* 박스 형태 유지 */
     }
 
-    .patent-content { flex-direction: column; }
+    .section { padding: 40px 20px; } /* 섹션 패딩 축소 */
+    
+    .section h2 { 
+        font-size: clamp(1.3rem, 6vw, 1.8rem); 
+        margin-bottom: 25px; /* 제목 하단 여백 축소 */
+        word-break: keep-all;
+    }
+
+    .grid { gap: 15px; } /* 카드 사이 간격 축소 */
+    
+    .card { padding: 20px; } /* 카드 내부 패딩 축소 */
+    .card h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    .card p { font-size: 0.95rem; margin-bottom: 8px; }
+
+    .patent-content { flex-direction: column; gap: 30px; }
     .patent-gallery { height: auto; flex-direction: column; }
     .patent-image img { height: 250px; object-fit: cover; }
 
