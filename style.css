@@ -383,9 +383,18 @@ footer {
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: rotate(-45deg); }
 
-    .hero-content h1 { font-size: 2.2rem; } /* 모바일에서만 폰트 조정 */
-    
-    .section { padding: 60px 20px; }
+    .hero-content h1 { 
+        font-size: 2.2rem; 
+        line-height: 1.5; /* 모바일에서 줄 간격 대폭 확대 */
+    }
+
+    .hero-title-line {
+        margin-bottom: 15px; /* 모바일에서만 줄 사이 간격을 더 넓힘 */
+    }
+
+    .highlight {
+        padding: 4px 10px; /* 모바일에서 박스 여백을 더 시원하게 */
+    }
     .section h2 { font-size: 1.8rem; }
 
     .patent-content { flex-direction: column; }
