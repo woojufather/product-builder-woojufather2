@@ -71,7 +71,7 @@ main {
 }
 
 .hero {
-    height: 80vh;
+    height: calc(100vh - var(--header-height)); /* 헤더 제외 화면 꽉 채우기 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,10 +149,13 @@ main {
 
 .section {
     padding: 80px 20px;
-    min-height: 80vh; 
+    min-height: calc(100vh - var(--header-height)); /* 각 섹션을 화면 높이에 맞춤 */
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 내용 중앙 배치 */
 }
 
 #problem {
@@ -399,7 +402,10 @@ footer {
         word-break: keep-all;
     }
 
-    .section { padding: 40px 20px; }
+    .section { 
+        padding: 40px 20px; 
+        min-height: auto; /* 모바일에서는 내용에 맞춰 높이 조절 */
+    }
     
     .section h2 { 
         font-size: clamp(1.3rem, 6vw, 1.8rem); 
@@ -416,11 +422,11 @@ footer {
 
     .patent-content { flex-direction: column; gap: 30px; }
     .patent-gallery { height: auto; flex-direction: column; gap: 20px; }
-    .patent-image { height: 250px; padding: 15px; } /* 틀 높이 고정 및 내부 여백 추가 */
+    .patent-image { height: 250px; padding: 15px; }
     .patent-image img { 
         height: 100%; 
         width: 100%; 
-        object-fit: contain; /* 이미지가 잘리지 않고 전체가 다 들어가도록 설정 */
+        object-fit: contain;
     }
 
     .cta-group { flex-direction: column; width: 100%; }
