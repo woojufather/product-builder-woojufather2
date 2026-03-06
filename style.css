@@ -389,7 +389,7 @@ footer {
     }
 
     .hero-title-line {
-        margin-bottom: 15px; /* 모바일에서만 줄 사이 간격을 더 넓힘 */
+        margin-bottom: 25px; /* 모바일에서 두 줄 사이의 간격을 25px로 대폭 확대 */
     }
 
     .highlight {
