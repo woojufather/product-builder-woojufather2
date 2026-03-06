@@ -49,11 +49,22 @@
     }
     </script>
 </head>
-<body>
+<body id="top">
     <header>
         <nav>
-            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">HelpOpen</a></div>
-            <button id="themeToggle" class="theme-toggle">🌙</button>
+            <a href="index.html" class="logo">HelpOpen</a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html#problem">문제점</a>
+                <a href="index.html#patent">특허기술</a>
+                <a href="product.html">제품소개</a>
+                <a href="contact.html">문의하기</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="다크 모드 전환">🌙</button>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
     </header>
 
@@ -61,7 +72,6 @@
         <section class="product-detail section">
             <div class="product-container">
                 <div class="product-image">
-                    <!-- 여기에 전달해주실 사진을 넣을 예정입니다 -->
                     <div class="image-placeholder">
                         <p>상품 이미지 준비 중</p>
                     </div>
@@ -84,8 +94,8 @@
                     </div>
 
                     <div class="purchase-actions">
-                        <button class="buy-now">지금 구매하기</button>
-                        <button class="cart">장바구니 담기</button>
+                        <a href="options.html" class="buy-now cta-button">지금 구매하기</a>
+                        <button class="cart cta-button secondary">장바구니 담기</button>
                     </div>
                 </div>
             </div>

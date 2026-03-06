@@ -121,10 +121,22 @@
         }
     </style>
 </head>
-<body>
+<body id="top">
     <header>
         <nav>
-            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">HelpOpen</a></div>
+            <a href="index.html" class="logo">HelpOpen</a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html#problem">문제점</a>
+                <a href="index.html#patent">특허기술</a>
+                <a href="product.html">제품소개</a>
+                <a href="contact.html">문의하기</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="다크 모드 전환">🌙</button>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
     </header>
 
@@ -167,6 +179,7 @@
         <p>&copy; 2026 HelpOpen Patent Solution. All rights reserved.</p>
     </footer>
 
+    <script src="main.js"></script>
     <script>
         const minusBtn = document.getElementById('minus-btn');
         const plusBtn = document.getElementById('plus-btn');
@@ -184,18 +197,15 @@
         let currentQuantity = 1;
 
         function updateDisplay(updateInput = true) {
-            // Update quantity text only if requested (to avoid cursor jumping while typing)
             if (updateInput) {
                 quantityDisplay.value = currentQuantity;
             }
 
-            // Calculate prices
             const productTotal = UNIT_PRICE * currentQuantity;
             const isFreeShipping = currentQuantity >= FREE_SHIPPING_THRESHOLD;
             const currentShippingFee = isFreeShipping ? 0 : DEFAULT_SHIPPING_FEE;
             const finalTotal = productTotal + currentShippingFee;
 
-            // Update text elements
             productPriceText.textContent = productTotal.toLocaleString() + '원';
             
             if (isFreeShipping) {
@@ -210,15 +220,12 @@
 
             totalDisplayText.textContent = '총 합계: ' + finalTotal.toLocaleString() + '원';
 
-            // Button states
             minusBtn.disabled = currentQuantity <= 1;
             plusBtn.disabled = currentQuantity >= MAX_QUANTITY;
         }
 
-        // Handle manual input
         quantityDisplay.addEventListener('input', (e) => {
             let value = parseInt(e.target.value);
-            
             if (isNaN(value)) {
                 currentQuantity = 1;
             } else if (value > MAX_QUANTITY) {
@@ -226,21 +233,18 @@
                 e.target.value = MAX_QUANTITY;
             } else if (value < 1) {
                 currentQuantity = 1;
-                // Don't force reset value to 1 immediately to allow typing (e.g. clearing the field)
             } else {
                 currentQuantity = value;
             }
-            
-            updateDisplay(false); // Don't reset input value while typing
+            updateDisplay(false);
         });
 
-        // Ensure valid value on blur
         quantityDisplay.addEventListener('blur', (e) => {
             let value = parseInt(e.target.value);
             if (isNaN(value) || value < 1) {
                 currentQuantity = 1;
             }
-            updateDisplay(true); // Force reset to valid value
+            updateDisplay(true);
         });
 
         minusBtn.addEventListener('click', () => {
@@ -257,7 +261,6 @@
             }
         });
 
-        // Initialize
         updateDisplay();
     </script>
 </body>
