@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = document.querySelectorAll('.nav-links a');
 
     // Hamburger Menu Toggle
-    if (hamburger) {
+    if (hamburger && navLinks) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
-            // Prevent body scroll when menu is open
+            // Prevent body scroll when menu is open on mobile
             if (navLinks.classList.contains('active')) {
                 body.style.overflow = 'hidden';
             } else {
@@ -19,12 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Close menu when a link is clicked
+    // Close menu when a link is clicked (mobile)
     links.forEach(link => {
         link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navLinks.classList.remove('active');
-            body.style.overflow = '';
+            if (hamburger && navLinks) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                body.style.overflow = '';
+            }
         });
     });
 
@@ -49,7 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    themeToggleBtn.addEventListener('click', toggleTheme);
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', toggleTheme);
+    }
 
     // Load saved theme
     const savedTheme = localStorage.getItem('theme');
@@ -76,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (startTime === null) startTime = currentTime;
             const timeElapsed = currentTime - startTime;
             
-            // Strictly Linear: distance * (current_time / total_duration) + start_position
             const run = (distance * (timeElapsed / duration)) + startPosition;
             
             window.scrollTo(0, run);
@@ -84,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (timeElapsed < duration) {
                 requestAnimationFrame(animation);
             } else {
-                window.scrollTo(0, targetPosition); // Ensure precision at the end
+                window.scrollTo(0, targetPosition);
             }
         }
 
