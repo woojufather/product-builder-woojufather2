@@ -321,5 +321,107 @@ footer {
 @media (max-width: 768px) {
     .hero-content h1 { font-size: 2rem; }
     .patent-content { flex-direction: column; }
-    .section { padding: 80px 20px; }
+    .section { padding: 60px 20px; }
+
+    /* Hamburger Menu Styles */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 24px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+    }
+
+    .hamburger span {
+        width: 30px;
+        height: 3px;
+        background: var(--text-color);
+        border-radius: 10px;
+        transition: all 0.3s linear;
+        position: relative;
+        transform-origin: 1px;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: var(--header-height);
+        right: -100%;
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        background-color: var(--bg-color);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: 0.3s ease;
+        box-shadow: -2px 5px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+        display: flex;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: bold;
+    }
+
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg); }
+
+    /* Touch target improvements */
+    .cta-button {
+        width: 100%;
+        text-align: center;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cta-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Image improvements */
+    .patent-gallery {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .patent-image img {
+        object-fit: cover;
+        height: 250px;
+    }
+}
+
+/* Desktop Navigation (Hidden on mobile) */
+@media (min-width: 769px) {
+    .hamburger {
+        display: none;
+    }
+    .nav-links {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    .nav-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+    .nav-links a:hover {
+        color: var(--primary-color);
+    }
 }
