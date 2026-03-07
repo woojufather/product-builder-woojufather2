@@ -287,22 +287,29 @@
         }
 
         /* 4. 결제 처리 (토스페이먼츠 테스트 연동) */
-        const clientKey = 'test_ck_D5bXGz7n3eN5W6m6Z48WnQ9Y4O7P';
+        // 토스페이먼츠 공식 테스트 클라이언트 키입니다.
+        const clientKey = 'test_ck_D5bXGz7n3eN5W6m6Z48WnQ9Y4O7P'; 
         const tossPayments = TossPayments(clientKey);
 
         function handlePayment(event) {
             event.preventDefault();
 
             const name = document.getElementById('orderer_name').value;
-            const payMethod = document.querySelector('input[name="payMethod"]:checked').value;
+            const selectedMethod = document.querySelector('input[name="payMethod"]:checked').value;
             
+            // 토스 SDK에서 인식하는 결제 수단 명칭으로 변환
+            let tossMethod = 'CARD'; // 기본값
+            if (selectedMethod === '카카오페이') tossMethod = 'CARD'; // 간편결제도 CARD로 호출 후 선택 가능
+            if (selectedMethod === '네이버페이') tossMethod = 'CARD';
+            if (selectedMethod === '가상계좌') tossMethod = 'VIRTUAL_ACCOUNT';
+
             const productTotal = UNIT_PRICE * currentQty;
             const currentShippingFee = currentQty >= FREE_SHIPPING_QTY ? 0 : DEFAULT_SHIPPING_FEE;
             const totalAmount = productTotal + currentShippingFee;
 
-            tossPayments.requestPayment(payMethod, {
+            tossPayments.requestPayment(tossMethod, {
                 amount: totalAmount,
-                orderId: 'HELP-' + new Date().getTime(),
+                orderId: 'HELP-' + Math.random().toString(36).substr(2, 9),
                 orderName: 'HelpOpen 도어 잠김 해제장치 ' + currentQty + '개',
                 customerName: name,
                 successUrl: window.location.origin + '/index.html?status=success',
@@ -312,7 +319,7 @@
                 if (error.code === 'USER_CANCEL') {
                     alert('결제가 취소되었습니다.');
                 } else {
-                    alert(error.message);
+                    alert('에러 발생: ' + error.message);
                 }
             });
         }
