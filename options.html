@@ -11,16 +11,17 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>주문서 작성 | HelpOpen</title>
-    <meta name="description" content="HelpOpen 도어 잠김 해제장치 주문 정보를 입력해 주세요.">
+    <title>주문 및 결제 | HelpOpen</title>
+    <meta name="description" content="HelpOpen 도어 잠김 해제장치 주문 정보를 입력하고 결제를 진행해 주세요.">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- 다음 우편번호 API -->
+    <!-- 다음 우편번호 API & 토스페이먼츠 SDK -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
 
     <style>
         .checkout-container {
@@ -29,26 +30,17 @@
             padding: 20px;
         }
         
-        /* 주문 상품 요약 카드 */
-        .order-summary-card {
+        .order-summary-card, .checkout-form {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        /* 주문서 폼 스타일 */
-        .checkout-form {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-        
         .form-section-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 20px;
             padding-bottom: 10px;
@@ -58,18 +50,9 @@
             gap: 10px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.95rem; }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        /* 입력창 높이 44px 이상 확보 */
         .form-control {
             width: 100%;
             height: 48px; 
@@ -79,75 +62,66 @@
             font-size: 1rem;
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: border-color 0.2s;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
+        /* 주소 입력 */
+        .address-group { display: grid; grid-template-columns: 1fr 120px; gap: 10px; margin-bottom: 10px; }
+        .zipcode-btn { height: 48px; background: #333; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-        textarea.form-control {
-            height: auto;
-            padding: 12px 15px;
-            min-height: 100px;
-        }
-
-        /* 주소 입력 그룹 */
-        .address-group {
+        /* 결제 수단 선택 UI */
+        .payment-methods {
             display: grid;
-            grid-template-columns: 120px 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
         }
 
-        .zipcode-btn {
-            height: 48px;
-            background: var(--text-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
+        .payment-method-item {
+            position: relative;
+        }
+
+        .payment-method-item input {
+            position: absolute;
+            opacity: 0;
             cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.2s;
         }
 
-        .zipcode-btn:hover {
-            opacity: 0.9;
-        }
-
-        /* 가격 정보 */
-        .price-summary {
-            background: var(--light-bg);
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        .price-row {
+        .payment-label {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: center;
+            justify-content: center;
+            height: 54px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            background: var(--bg-color);
         }
 
-        .price-row.total {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed #ccc;
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--accent-color);
+        .payment-method-item input:checked + .payment-label {
+            border-color: var(--primary-color);
+            background-color: rgba(37, 99, 235, 0.05);
+            color: var(--primary-color);
         }
 
-        .submit-order-btn {
+        /* 하단 가격 정보 */
+        .price-summary { background: var(--light-bg); padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .price-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .shipping-fee-text.free { color: var(--primary-color); font-weight: bold; }
+        .price-row.total { 
+            margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; 
+            font-size: 1.4rem; font-weight: bold; color: var(--accent-color); 
+        }
+
+        .pay-button {
             width: 100%;
-            height: 56px;
+            height: 60px;
             background-color: var(--primary-color);
             color: white;
             border: none;
             border-radius: 30px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
             margin-top: 30px;
@@ -155,16 +129,10 @@
             transition: transform 0.2s;
         }
 
-        .submit-order-btn:hover {
-            transform: translateY(-2px);
-        }
+        .pay-button:active { transform: scale(0.98); }
 
         @media (max-width: 600px) {
-            .checkout-container { padding: 15px; }
-            .checkout-form { padding: 20px; }
-            .address-group { grid-template-columns: 1fr 100px; }
-            .zipcode-btn { grid-column: 2; grid-row: 1; }
-            #zipcode { grid-column: 1; grid-row: 1; }
+            .payment-methods { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -188,61 +156,75 @@
     </header>
 
     <main class="checkout-container">
-        <h1>주문서 작성</h1>
+        <h1>주문 및 결제</h1>
         
-        <!-- 1. 수량 선택 부분 (이전 단계 유지) -->
+        <!-- 주문 상품 요약 -->
         <div class="order-summary-card">
             <div class="form-section-title">🛒 주문 상품 정보</div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span>도어 잠김 해제장치 (HelpOpen)</span>
-                <div class="quantity-selector" style="display: flex; align-items: center; gap: 10px; background: #f0f0f0; padding: 5px; border-radius: 8px;">
-                    <button type="button" onclick="changeQty(-1)" style="width: 34px; height: 34px; border: none; border-radius: 4px; cursor: pointer;">-</button>
-                    <input type="number" id="quantity-display" value="1" readonly style="width: 40px; text-align: center; border: none; background: transparent; font-weight: bold; font-size: 1.1rem;">
-                    <button type="button" onclick="changeQty(1)" style="width: 34px; height: 34px; border: none; border-radius: 4px; cursor: pointer;">+</button>
+                <div style="display: flex; align-items: center; gap: 12px; background: #f4f4f4; padding: 6px 12px; border-radius: 20px;">
+                    <button type="button" onclick="changeQty(-1)" style="border:none; cursor:pointer; font-weight:bold; font-size:1.2rem;">-</button>
+                    <input type="number" id="quantity-display" value="1" readonly style="width:30px; text-align:center; border:none; background:transparent; font-weight:bold;">
+                    <button type="button" onclick="changeQty(1)" style="border:none; cursor:pointer; font-weight:bold; font-size:1.2rem;">+</button>
                 </div>
             </div>
             <div class="price-summary">
                 <div class="price-row"><span>상품 금액</span><span id="product-price">39,000원</span></div>
-                <div class="price-row"><span>배송비</span><span id="shipping-fee">3,000원</span></div>
-                <div class="price-row total"><span>총 결제 예정 금액</span><span id="total-display">42,000원</span></div>
+                <div class="price-row">
+                    <span>배송비 <small style="font-weight:normal; opacity:0.7;">(5개 이상 무료)</small></span>
+                    <span id="shipping-fee" class="shipping-fee-text">3,000원</span>
+                </div>
+                <div class="price-row total"><span>최종 결제 금액</span><span id="total-display">42,000원</span></div>
             </div>
         </div>
 
-        <!-- 2. 배송 정보 입력 폼 -->
-        <form id="checkoutForm" class="checkout-form" action="https://formspree.io/f/xjgepoej" method="POST">
-            <div class="form-section-title">🚚 배송 정보 입력</div>
-            
-            <!-- 숨겨진 필드: 주문 상품 정보 -->
-            <input type="hidden" name="_subject" value="새로운 주문이 접수되었습니다!">
-            <input type="hidden" id="hidden-qty" name="주문수량" value="1">
-            <input type="hidden" id="hidden-total" name="결제금액" value="42,000원">
-
-            <div class="form-group">
-                <label for="orderer_name">주문자 성함</label>
-                <input type="text" id="orderer_name" name="name" class="form-control" required placeholder="받으시는 분 성함">
-            </div>
-
-            <div class="form-group">
-                <label for="phone">연락처</label>
-                <input type="tel" id="phone" name="phone" class="form-control" required placeholder="010-0000-0000" maxlength="13">
-            </div>
-
-            <div class="form-group">
-                <label>주소</label>
-                <div class="address-group">
-                    <input type="text" id="zipcode" name="zipcode" class="form-control" placeholder="우편번호" readonly required>
-                    <button type="button" class="zipcode-btn" onclick="execDaumPostcode()">우편번호 찾기</button>
+        <!-- 배송 및 결제 폼 -->
+        <form id="paymentForm" onsubmit="handlePayment(event)">
+            <div class="checkout-form">
+                <div class="form-section-title">🚚 배송지 정보</div>
+                <div class="form-group">
+                    <label for="orderer_name">이름</label>
+                    <input type="text" id="orderer_name" class="form-control" required placeholder="받으시는 분 성함">
                 </div>
-                <input type="text" id="address_basic" name="address1" class="form-control" placeholder="기본 주소" readonly required style="margin-bottom: 10px;">
-                <input type="text" id="address_detail" name="address2" class="form-control" placeholder="상세 주소 (동, 호수 등)" required>
+                <div class="form-group">
+                    <label for="phone">연락처</label>
+                    <input type="tel" id="phone" class="form-control" required placeholder="010-0000-0000" maxlength="13">
+                </div>
+                <div class="form-group">
+                    <label>주소</label>
+                    <div class="address-group">
+                        <input type="text" id="zipcode" class="form-control" placeholder="우편번호" readonly required>
+                        <button type="button" class="zipcode-btn" onclick="execDaumPostcode()">우편번호 찾기</button>
+                    </div>
+                    <input type="text" id="address_basic" class="form-control" placeholder="기본 주소" readonly required style="margin-bottom:10px;">
+                    <input type="text" id="address_detail" class="form-control" placeholder="상세 주소 입력" required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="memo">배송 메모 (선택)</label>
-                <textarea id="memo" name="memo" class="form-control" placeholder="예: 문 앞에 놓아주세요, 부재 시 경비실에 맡겨주세요"></textarea>
+            <div class="checkout-form">
+                <div class="form-section-title">💳 결제 수단 선택</div>
+                <div class="payment-methods">
+                    <div class="payment-method-item">
+                        <input type="radio" name="payMethod" id="card" value="카드" checked>
+                        <label for="card" class="payment-label">신용/체크카드</label>
+                    </div>
+                    <div class="payment-method-item">
+                        <input type="radio" name="payMethod" id="kakao" value="카카오페이">
+                        <label for="kakao" class="payment-label">카카오페이</label>
+                    </div>
+                    <div class="payment-method-item">
+                        <input type="radio" name="payMethod" id="naver" value="네이버페이">
+                        <label for="naver" class="payment-label">네이버페이</label>
+                    </div>
+                    <div class="payment-method-item">
+                        <input type="radio" name="payMethod" id="vbank" value="가상계좌">
+                        <label for="vbank" class="payment-label">무통장(가상계좌)</label>
+                    </div>
+                </div>
             </div>
 
-            <button type="submit" class="submit-order-btn">주문 완료하기</button>
+            <button type="submit" class="pay-button">결제하기</button>
         </form>
     </main>
 
@@ -252,59 +234,91 @@
 
     <script src="main.js"></script>
     <script>
-        /* 1. 수량 및 가격 계산 로직 */
+        /* 1. 가격 및 무료배송 설정 */
         const UNIT_PRICE = 39000;
-        const SHIPPING_FEE = 3000;
+        const DEFAULT_SHIPPING_FEE = 3000;
+        const FREE_SHIPPING_QTY = 5;
         let currentQty = 1;
 
         function changeQty(delta) {
             currentQty = Math.max(1, currentQty + delta);
-            updatePrice();
+            updateDisplay();
         }
 
-        function updatePrice() {
-            const productTotal = UNIT_PRICE * currentQty;
-            const total = productTotal + SHIPPING_FEE;
-            
+        function updateDisplay() {
             document.getElementById('quantity-display').value = currentQty;
-            document.getElementById('product-price').textContent = productTotal.toLocaleString() + '원';
-            document.getElementById('total-display').textContent = total.toLocaleString() + '원';
             
-            // Hidden fields for Formspree
-            document.getElementById('hidden-qty').value = currentQty;
-            document.getElementById('hidden-total').value = total.toLocaleString() + '원';
+            const productTotal = UNIT_PRICE * currentQty;
+            const isFreeShipping = currentQty >= FREE_SHIPPING_QTY;
+            const currentShippingFee = isFreeShipping ? 0 : DEFAULT_SHIPPING_FEE;
+            const total = productTotal + currentShippingFee;
+
+            document.getElementById('product-price').textContent = productTotal.toLocaleString() + '원';
+            
+            const shipFeeElement = document.getElementById('shipping-fee');
+            if (isFreeShipping) {
+                shipFeeElement.textContent = '무료';
+                shipFeeElement.classList.add('free');
+            } else {
+                shipFeeElement.textContent = DEFAULT_SHIPPING_FEE.toLocaleString() + '원';
+                shipFeeElement.classList.remove('free');
+            }
+            
+            document.getElementById('total-display').textContent = total.toLocaleString() + '원';
         }
 
-        /* 2. 전화번호 자동 하이픈 (-) 포맷팅 */
-        const phoneInput = document.getElementById('phone');
-        phoneInput.addEventListener('input', (e) => {
+        /* 2. 자동 하이픈 */
+        document.getElementById('phone').addEventListener('input', (e) => {
             let val = e.target.value.replace(/[^0-9]/g, '');
-            if (val.length > 3 && val.length <= 7) {
-                val = val.slice(0, 3) + '-' + val.slice(3);
-            } else if (val.length > 7) {
-                val = val.slice(0, 3) + '-' + val.slice(3, 7) + '-' + val.slice(7);
-            }
+            if (val.length > 3 && val.length <= 7) val = val.slice(0, 3) + '-' + val.slice(3);
+            else if (val.length > 7) val = val.slice(0, 3) + '-' + val.slice(3, 7) + '-' + val.slice(7);
             e.target.value = val;
         });
 
-        /* 3. 다음 우편번호 API 연동 */
+        /* 3. 우편번호 API */
         function execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-                    let addr = ''; // 주소 변수
-                    if (data.userSelectedType === 'R') { addr = data.roadAddress; } 
-                    else { addr = data.jibunAddress; }
-
                     document.getElementById('zipcode').value = data.zonecode;
-                    document.getElementById('address_basic').value = addr;
+                    document.getElementById('address_basic').value = data.roadAddress || data.jibunAddress;
                     document.getElementById('address_detail').focus();
                 }
             }).open();
         }
 
-        // 초기 가격 업데이트
-        updatePrice();
+        /* 4. 결제 처리 (토스페이먼츠 테스트 연동) */
+        const clientKey = 'test_ck_D5bXGz7n3eN5W6m6Z48WnQ9Y4O7P';
+        const tossPayments = TossPayments(clientKey);
+
+        function handlePayment(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('orderer_name').value;
+            const payMethod = document.querySelector('input[name="payMethod"]:checked').value;
+            
+            const productTotal = UNIT_PRICE * currentQty;
+            const currentShippingFee = currentQty >= FREE_SHIPPING_QTY ? 0 : DEFAULT_SHIPPING_FEE;
+            const totalAmount = productTotal + currentShippingFee;
+
+            tossPayments.requestPayment(payMethod, {
+                amount: totalAmount,
+                orderId: 'HELP-' + new Date().getTime(),
+                orderName: 'HelpOpen 도어 잠김 해제장치 ' + currentQty + '개',
+                customerName: name,
+                successUrl: window.location.origin + '/index.html?status=success',
+                failUrl: window.location.origin + '/options.html?status=fail',
+            })
+            .catch(function (error) {
+                if (error.code === 'USER_CANCEL') {
+                    alert('결제가 취소되었습니다.');
+                } else {
+                    alert(error.message);
+                }
+            });
+        }
+
+        // 초기 실행
+        updateDisplay();
     </script>
 </body>
 </html>
