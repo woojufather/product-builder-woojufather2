@@ -170,12 +170,12 @@
                 </div>
             </div>
             <div class="price-summary">
-                <div class="price-row"><span>상품 금액</span><span id="product-price">39,000원</span></div>
+                <div class="price-row"><span>상품 금액</span><span id="product-price">10,000원</span></div>
                 <div class="price-row">
                     <span>배송비 <small style="font-weight:normal; opacity:0.7;">(5개 이상 무료)</small></span>
                     <span id="shipping-fee" class="shipping-fee-text">3,000원</span>
                 </div>
-                <div class="price-row total"><span>최종 결제 금액</span><span id="total-display">42,000원</span></div>
+                <div class="price-row total"><span>최종 결제 금액</span><span id="total-display">13,000원</span></div>
             </div>
         </div>
 
@@ -206,20 +206,20 @@
                 <div class="form-section-title">💳 결제 수단 선택</div>
                 <div class="payment-methods">
                     <div class="payment-method-item">
-                        <input type="radio" name="payMethod" id="card" value="카드" checked>
+                        <input type="radio" name="payMethod" id="card" value="CARD" checked>
                         <label for="card" class="payment-label">신용/체크카드</label>
                     </div>
                     <div class="payment-method-item">
-                        <input type="radio" name="payMethod" id="kakao" value="카카오페이">
-                        <label for="kakao" class="payment-label">카카오페이</label>
+                        <input type="radio" name="payMethod" id="transfer" value="TRANSFER">
+                        <label for="transfer" class="payment-label">계좌이체</label>
                     </div>
                     <div class="payment-method-item">
-                        <input type="radio" name="payMethod" id="naver" value="네이버페이">
-                        <label for="naver" class="payment-label">네이버페이</label>
-                    </div>
-                    <div class="payment-method-item">
-                        <input type="radio" name="payMethod" id="vbank" value="가상계좌">
+                        <input type="radio" name="payMethod" id="vbank" value="VIRTUAL_ACCOUNT">
                         <label for="vbank" class="payment-label">무통장(가상계좌)</label>
+                    </div>
+                    <div class="payment-method-item">
+                        <input type="radio" name="payMethod" id="tosspay" value="TOSSPAY">
+                        <label for="tosspay" class="payment-label">토스페이</label>
                     </div>
                 </div>
             </div>
@@ -286,9 +286,8 @@
             }).open();
         }
 
-        /* 4. 결제 처리 (토스페이먼츠 테스트 연동) */
-        // 토스페이먼츠 공식 테스트 클라이언트 키입니다.
-        const clientKey = 'test_ck_D5bXGz7n3eN5W6m6Z48WnQ9Y4O7P'; 
+        /* 4. 결제 처리 (토스페이먼츠 최신 공식 테스트 키) */
+        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'; 
         const tossPayments = TossPayments(clientKey);
 
         function handlePayment(event) {
@@ -297,19 +296,16 @@
             const name = document.getElementById('orderer_name').value;
             const selectedMethod = document.querySelector('input[name="payMethod"]:checked').value;
             
-            // 토스 SDK에서 인식하는 결제 수단 명칭으로 변환
-            let tossMethod = 'CARD'; // 기본값
-            if (selectedMethod === '카카오페이') tossMethod = 'CARD'; // 간편결제도 CARD로 호출 후 선택 가능
-            if (selectedMethod === '네이버페이') tossMethod = 'CARD';
-            if (selectedMethod === '가상계좌') tossMethod = 'VIRTUAL_ACCOUNT';
-
             const productTotal = UNIT_PRICE * currentQty;
             const currentShippingFee = currentQty >= FREE_SHIPPING_QTY ? 0 : DEFAULT_SHIPPING_FEE;
             const totalAmount = productTotal + currentShippingFee;
 
-            tossPayments.requestPayment(tossMethod, {
+            // 고유한 주문 ID 생성
+            const orderId = 'HO-' + Math.random().toString(36).substr(2, 9);
+
+            tossPayments.requestPayment(selectedMethod, {
                 amount: totalAmount,
-                orderId: 'HELP-' + Math.random().toString(36).substr(2, 9),
+                orderId: orderId,
                 orderName: 'HelpOpen 도어 잠김 해제장치 ' + currentQty + '개',
                 customerName: name,
                 successUrl: window.location.origin + '/index.html?status=success',
@@ -324,7 +320,6 @@
             });
         }
 
-        // 초기 실행
         updateDisplay();
     </script>
 </body>
