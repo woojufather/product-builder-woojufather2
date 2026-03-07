@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ES9BFXNYPM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ES9BFXNYPM');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 주문 내역 | HelpOpen</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .orders-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .order-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .order-id { font-weight: bold; color: var(--primary-color); }
+        .order-date { font-size: 0.9rem; opacity: 0.6; }
+        .order-info-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .order-info-label { opacity: 0.7; }
+        .order-info-value { font-weight: 500; }
+        .no-orders {
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            background: #e0e7ff;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body id="top">
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HelpOpen</a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html#problem">문제점</a>
+                <a href="index.html#patent">특허기술</a>
+                <a href="product.html">제품소개</a>
+                <a href="my-orders.html">주문조회</a>
+                <a href="contact.html">문의하기</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="다크 모드 전환">🌙</button>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="orders-container">
+        <h1>나의 주문 내역</h1>
+        <p style="margin-bottom: 30px; opacity: 0.7;">최근 이 기기에서 주문하신 내역입니다.</p>
+
+        <div id="orderList">
+            <!-- 주문 내역이 여기에 동적으로 추가됩니다 -->
+        </div>
+
+        <div id="noOrders" class="no-orders" style="display: none;">
+            <p>최근 주문 내역이 없습니다.</p>
+            <a href="options.html" class="cta-button" style="margin-top: 20px; display: inline-block;">제품 구매하기</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 HelpOpen Patent Solution. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('helpopen_orders') || '[]');
+            const orderList = document.getElementById('orderList');
+            const noOrders = document.getElementById('noOrders');
+
+            if (orders.length === 0) {
+                noOrders.style.display = 'block';
+                return;
+            }
+
+            // 최신순으로 정렬
+            orders.reverse().forEach(order => {
+                const card = document.createElement('div');
+                card.className = 'order-card';
+                card.innerHTML = `
+                    <div class="order-header">
+                        <span class="order-id">주문번호: ${order.orderId}</span>
+                        <span class="order-date">${order.date}</span>
+                    </div>
+                    <div class="order-info-row">
+                        <span class="order-info-label">상품명</span>
+                        <span class="order-info-value">HelpOpen 도어 잠김 해제장치</span>
+                    </div>
+                    <div class="order-info-row">
+                        <span class="order-info-label">주문수량</span>
+                        <span class="order-info-value">${order.qty}개</span>
+                    </div>
+                    <div class="order-info-row">
+                        <span class="order-info-label">결제금액</span>
+                        <span class="order-info-value" style="color:var(--accent-color);">${order.amount.toLocaleString()}원</span>
+                    </div>
+                    <div class="order-info-row" style="margin-top:15px;">
+                        <span class="order-info-label">진행상태</span>
+                        <span class="status-badge">결제완료/배송준비중</span>
+                    </div>
+                `;
+                orderList.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadOrders);
+    </script>
+</body>
+</html>

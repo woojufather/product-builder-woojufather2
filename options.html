@@ -144,6 +144,7 @@
                 <a href="index.html#problem">문제점</a>
                 <a href="index.html#patent">특허기술</a>
                 <a href="product.html">제품소개</a>
+                <a href="my-orders.html">주문조회</a>
                 <a href="contact.html">문의하기</a>
                 <button id="themeToggle" class="theme-toggle" aria-label="다크 모드 전환">🌙</button>
             </div>
@@ -301,7 +302,19 @@
             const totalAmount = productTotal + currentShippingFee;
 
             // 고유한 주문 ID 생성
-            const orderId = 'HO-' + Math.random().toString(36).substr(2, 9);
+            const orderId = 'HO-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+            // [추가] 브라우저(LocalStorage)에 주문 정보 저장
+            const orderData = {
+                orderId: orderId,
+                qty: currentQty,
+                amount: totalAmount,
+                date: new Date().toLocaleString('ko-KR'),
+                customerName: name
+            };
+            const existingOrders = JSON.parse(localStorage.getItem('helpopen_orders') || '[]');
+            existingOrders.push(orderData);
+            localStorage.setItem('helpopen_orders', JSON.stringify(existingOrders));
 
             tossPayments.requestPayment(selectedMethod, {
                 amount: totalAmount,
