@@ -338,10 +338,14 @@ footer {
         letter-spacing: -0.02em;
     }
 
-    p, .card p, .patent-text p, .description p, .hero-content p {
+    p, .card p, .patent-text p, .description p {
         word-break: keep-all;
         overflow-wrap: break-word;
         text-align: left;
+    }
+
+    .hero-content p {
+        text-align: center;
     }
 
     .hamburger {
