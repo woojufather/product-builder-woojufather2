@@ -341,7 +341,7 @@ footer {
     p, .card p, .patent-text p, .description p, .hero-content p {
         word-break: keep-all;
         overflow-wrap: break-word;
-        text-align: center;
+        text-align: left;
     }
 
     .hamburger {
