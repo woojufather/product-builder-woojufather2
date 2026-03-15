@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>필독사항 | HelpOpen 도어 잠김 해제장치</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .notice-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .qa-item {
+            margin-bottom: 40px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .question {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .question::before {
+            content: 'Q.';
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+        .answer {
+            line-height: 1.8;
+            color: var(--text-color);
+            position: relative;
+            padding-left: 30px;
+        }
+        .answer::before {
+            content: 'A.';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        .highlight-text {
+            background-color: #fff3f3;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        body.dark-mode .highlight-text {
+            background-color: #4c1d1d;
+            color: #ff8787;
+        }
+        .sub-points {
+            margin-top: 20px;
+            list-style: none;
+            padding-left: 0;
+        }
+        .sub-points li {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            background: var(--light-bg);
+            border-radius: 0 8px 8px 0;
+        }
+        .sub-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .qa-item {
+                padding: 20px;
+            }
+            .question {
+                font-size: 1.1rem;
+            }
+            .answer {
+                font-size: 0.95rem;
+                padding-left: 20px;
+            }
+            .answer::before {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HelpOpen</a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html#problem">문제점</a>
+                <a href="index.html#patent">제품소개</a>
+                <a href="my-orders.html">주문조회</a>
+                <a href="contact.html">문의하기</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="다크 모드 전환">🌙</button>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="notice-container">
+            <a href="index.html#patent" class="back-btn">← 돌아가기</a>
+            <h1 style="margin-bottom: 40px; text-align: center;">필독사항 및 자주 묻는 질문</h1>
+
+            <div class="qa-item">
+                <div class="question">본 제품을 개발하게 된 특별한 계기가 있으신가요?</div>
+                <div class="answer">
+                    화장실 고립 사고의 아찔함을 직접 경험한 것이 본 제품의 출발점이 되었습니다. 과거 휴가 중 화장실 문 손잡이가 고장 나 약 2시간가량 갇히며 극심한 공황 상태를 겪은 바 있습니다. 당시 화장실에는 창문도 없었고, 휴대전화도 지참하지 않아 외부로 구조를 요청할 수 있는 방법이 전무했습니다.<br><br>
+                    탈출 후, <span class="highlight-text">'만약 아내나 어린아이가 갇혔다면 어떻게 되었을까'</span>라는 생각에 큰 경각심을 느꼈습니다. 누구나 위급 상황에서 외부의 도움 없이도 안전하게 스스로 탈출할 수 있는 확실한 장치의 필요성을 절감하여 오랜 고민 끝에 본 제품을 개발하게 되었습니다.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">해당 제품은 화장실 문을 '밀고 들어가는' 구조에만 설치가 가능한가요?</div>
+                <div class="answer">
+                    네, 맞습니다. 현재 모델은 거실에서 화장실로 진입할 때 문을 밀어서 여는(Push) 구조에 최적화되어 있습니다.<br><br>
+                    국내 주거 환경의 특성상 화장실 물 넘침을 방지하기 위해 대부분 밀고 들어가는 형태를 취하고 있어, 범용적인 설치가 가능할 것으로 예상합니다. 다만, 고객님들의 다양한 주거 환경을 모두 충족시키기 위해, 화장실 문을 당겨서 여는(Pull) 구조에도 적용 가능한 후속 모델을 2026년 하반기에서 2027년 초 출시 목표로 연구 개발 중에 있습니다.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">제품 설치 및 사용 시 특별히 주의해야 할 사항이 있습니까?</div>
+                <div class="answer">
+                    본 제품은 비상시 확실한 작동을 보장하기 위해 규격, 소재, 디자인 등 다각적인 테스트를 거쳐 설계되었습니다. 기존 문틀의 래치 플레이트(Latch Plate)와 동일한 규격으로 호환성을 높였으며, 특히 본체(금속)와 가림막(플라스틱)의 소재를 이원화하여 기능성을 극대화했습니다.
+
+                    <ul class="sub-points">
+                        <li>
+                            <span class="sub-title">• 소재 이원화의 이유 (부식 방지 및 확실한 작동):</span>
+                            전체를 금속 소재로 제작할 경우 래치 볼트 개방력은 우수할 수 있으나, 화장실 특유의 고습도 환경으로 인해 부식이 발생할 우려가 큽니다. 이는 정작 위급한 순간에 기기가 오작동하는 치명적인 원인이 될 수 있습니다. 이를 방지하기 위해 가림막은 내부식성이 뛰어난 플라스틱 소재를 채택했으며, 여러 소재(아세탈, PC, PCG 등)의 강도 테스트를 거쳐 최적의 내구성을 지닌 특수 소재(PCG)를 적용했습니다.
+                        </li>
+                        <li>
+                            <span class="sub-title">• 가림막 파손에 대한 이해 (의도된 안전 설계):</span>
+                            고강도 재료를 사용하여 긴급 탈출 시 문을 여는 데는 전혀 지장이 없으나, 잠금해제시 문의 래치볼트가 가림막에 휨을 줌으로써 가림막이 파손될 수 있습니다. <span class="highlight-text">이는 제품의 결함이나 제작 실수가 아니라, 위급한 '단 한 번의 순간'에 확실한 탈출을 보장하기 위해 의도적으로 설계된 안전 메커니즘입니다.</span><br>
+                            (가림막이 파손된 경우 고객센터로 연락해 주시면 합리적인 비용으로 부품 교체를 지원해 드립니다.)
+                        </li>
+                        <li>
+                            <span class="sub-title">• 설치 전 필수 확인 사항:</span>
+                            반드시 동봉된 제품 설치 안내 영상(QR코드 연결)을 먼저 시청해 주십시오. 영상의 지침에 따라 가동 테스트를 완료하신 후 고정 테이프를 부착하시기 바랍니다. 유의 사항을 숙지하지 않고 문을 끝까지 당길 경우 가림막이 손상될 수 있으니 각별한 주의를 부탁드립니다.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 HelpOpen Patent Solution. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
